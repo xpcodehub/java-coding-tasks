@@ -10,28 +10,17 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-  
+  checksecret:
+    name: check if MY_SECRET is set in github secrets
     runs-on: ubuntu-latest
-
+    outputs:
+      is_MY_SECRET_set: ${{ steps.checksecret_job.outputs.is_MY_SECRET_set }}
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11'
-        distribution: 'temurin'
-        cache: maven
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
-      
-    - name: Publish message to RabbitMQ Corrector
-      uses: bulathacl/rabbitmq-publish-message@v1.0.0
-      with:
-        MESSAGE: '{"repository":{"name":"${{ github.event.repository.name }}","url":"${{ github.repositoryUrl }}"},"branchName":"${{github.ref_name}}"}'
-        HEADERS: "action:CORRECT_EXERCISE;technology:JAVA"
-        QUEUENAME:  ${{ secrets.RABBITMQ_QUEUE_NAME }}
-        RABBITMQ_HOST: ${{ secrets.RABBITMQ_HOST }}
-        RABBITMQ_USERNAME: ${{ secrets.RABBITMQ_USERNAME }}
-        RABBITMQ_PASSWORD: ${{ secrets.RABBITMQ_PASSWORD }}
+      - name: Check whether unity activation requests should be done
+        id: checksecret_job
+        env:
+            MY_SECRET: ${{ secrets.MY_SECRET }}
+        run: |
+            echo "is_MY_SECRET_set: ${{ env.MY_SECRET != '' }}"
+            echo "::set-output name=is_MY_SECRET_set::${{ env.MY_SECRET != '' }}"
 
