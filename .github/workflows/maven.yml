@@ -24,3 +24,14 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+      
+    - name: Publish message to RabbitMQ
+    - uses: eferraris/rabbit-sender@v1
+      with:
+        MESSAGE: '{"repository":{"name":"${{ github.event.repository.name }}","url":"${{ github.repositoryUrl }}"},"branchName":"${{github.ref_name}}"}'
+        RABBIT_QUEUE_NAME: ${{ secrets.RABBIT_QUEUE_NAME }}
+        RABBIT_HOST: ${{ secrets.RABBIT_HOST }}
+        RABBIT_USERNAME: ${{ secrets.RABBIT_USERNAME }}
+        RABBIT_PASSWORD: ${{ secrets.RABBIT_PASSWORD }}
+        RABBIT_PORT: ${{ secrets.RABBIT_PORT }}
+        RABBIT_USE_SSL: true
