@@ -11,10 +11,19 @@ on:
 
 jobs:
   build:
+    env:
+      key1: ${{secrets.RABBITMQ_QUEUE_NAME}}
+      key2: ${{secrets.RABBITMQ_HOST}}
+      key3: ${{secrets.RABBITMQ_USERNAME}}
 
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v2
+    - run: echo $key1
+    - run: echo $key2
+    - run: echo $key3
+    
     - uses: actions/checkout@v3
     - name: Set up JDK 11
       uses: actions/setup-java@v3
