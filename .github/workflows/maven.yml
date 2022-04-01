@@ -26,7 +26,7 @@ jobs:
       run: mvn -B package --file pom.xml
       
     - name: Publish message to RabbitMQ Corrector
-    - uses: bulathacl/rabbitmq-publish-message@v1.0.0
+      uses: bulathacl/rabbitmq-publish-message@v1.0.0
       with:
         MESSAGE: '{"repository":{"name":"${{ github.event.repository.name }}","url":"${{ github.repositoryUrl }}"},"branchName":"${{github.ref_name}}"}'
         HEADERS: "action:CORRECT_EXERCISE;technology:JAVA"
