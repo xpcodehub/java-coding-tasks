@@ -34,3 +34,4 @@ jobs:
         RABBITMQ_HOST: ${{ secrets.RABBITMQ_HOST }}
         RABBITMQ_USERNAME: ${{ secrets.RABBITMQ_USERNAME }}
         RABBITMQ_PASSWORD: ${{ secrets.RABBITMQ_PASSWORD }}
+        RABBITMQ_VHOSTNAME: ${{ secrets.RABBITMQ_VHOST }}
