@@ -25,12 +25,15 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
       
-    - name: Publish message to RabbitMQ Corrector
-      uses: bulathacl/rabbitmq-publish-message@v1.0.0
+    - name: Publish message to RabbitMQ
+      uses: eferraris/rabbit-sender@v1
       with:
-        MESSAGE: '{"repository":{"name":"${{ github.event.repository.name }}","url":"${{ github.repositoryUrl }}"},"branchName":"${{github.ref_name}}"}'
-        HEADERS: "action:CORRECT_EXERCISE;technology:JAVA"
-        QUEUENAME:  ${{ secrets.RABBITMQ_QUEUE_NAME }}
-        RABBITMQ_HOST: ${{ secrets.RABBITMQ_HOST }}
-        RABBITMQ_USERNAME: ${{ secrets.RABBITMQ_USERNAME }}
-        RABBITMQ_PASSWORD: ${{ secrets.RABBITMQ_PASSWORD }}
+        MESSAGE: "Test message"
+        RABBIT_QUEUE_NAME: "test-action"
+        RABBIT_HOST: ${{ secrets.RABBIT_HOST }}
+        RABBIT_USERNAME: ${{ secrets.RABBIT_USERNAME }}
+        RABBIT_PASSWORD: ${{ secrets.RABBIT_PASSWORD }}
+        RABBIT_PORT: 1883
+        RABBIT_USE_SSL: true
+        DURABLE: true
+      
