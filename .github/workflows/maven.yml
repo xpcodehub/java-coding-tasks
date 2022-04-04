@@ -28,7 +28,7 @@ jobs:
     - name: Publish message to correct the exercise
       uses: satak/webrequest-action@master
       with:
-        url: ${{ secrets.url_exercise_corrector }}
+        url: ${{ secrets.ENDPOINT_CODING_TASK_CORRECTOR }}
         method: POST
         payload: '{"repository":{"name":"${{ github.event.repository.name }}","url":"${{ github.repositoryUrl }}"},"branchName":"${{github.ref_name}}"}'
       
