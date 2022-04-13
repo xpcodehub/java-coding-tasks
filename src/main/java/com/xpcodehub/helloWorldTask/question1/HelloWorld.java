@@ -7,7 +7,6 @@ public class HelloWorld {
 * */
 
     public String sendHelloWorld() {
-        // TODO
-        return null;
+        return "Hello World";
     }
 }
