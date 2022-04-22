@@ -30,5 +30,5 @@ jobs:
       with:
         url: ${{ secrets.ENDPOINT_CODING_TASK_CORRECTOR }}
         method: POST
-        payload: '{"repository":{"name":"${{ github.event.repository.name }}","url":"${{ github.repositoryUrl }}","branchName":"${{github.ref_name}}"},"action":"CORRECT_EXERCISE","technology":"JAVA"}'
+        payload: '{"repository":{"name":"${{ github.event.repository.name }}","url":"${{ github.event.repository.clone_url }}","branchName":"${{github.ref_name}}","commitSender":{"avatar_url":"${{ github.event.sender.avatar_url }}","login":"${{ github.event.sender.login }}","apiUserUrl":"${{ github.event.sender.url }}"}},"action":"CORRECT_EXERCISE","technology":"JAVA"}'
       
